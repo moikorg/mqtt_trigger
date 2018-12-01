@@ -1,0 +1,4 @@
+configparser
+paho-mqtt
+datetime
+requests
