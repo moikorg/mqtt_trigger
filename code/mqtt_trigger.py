@@ -3,6 +3,7 @@ import argparse
 import configparser
 import datetime
 import requests
+import os
 
 switcher = {
                 "FF6897": "ircode/0",
@@ -36,7 +37,7 @@ def configSectionMap(config, section):
 
 
 def parseTheArgs() -> object:
-    parser = argparse.ArgumentParser(description='Listen to specific messages on MQTT and write them to DB')
+    parser = argparse.ArgumentParser(description='Listen to specific messages on MQTT and fire the API call')
     parser.add_argument('-d', dest='verbose', action='store_true',
                         help='print debugging information')
     parser.add_argument('-f', help='path and filename of the config file, default is ./config.rc',
@@ -85,7 +86,14 @@ def main():
     config = configparser.ConfigParser()
     config.read(args.f)
 
-    broker = configSectionMap(config, "MQTT")['host']
+    try:
+        broker = configSectionMap(config, "MQTT")['host']
+    except:
+        print("Could not open config file, or could not find config section in file")
+        config_full_path = os.getcwd() + "/" + args.f
+        print("Tried to open the config file: ", config_full_path)
+
+        return 1
     client = mqtt.Client( "mqtt2db")
 
 
