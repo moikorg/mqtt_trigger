@@ -10,3 +10,5 @@ services:
     restart: always
 #    network_mode: "host"
     container_name: "mqtt_trigger"
+    environment: 
+        - PYTHONUNBUFFERED=0
