@@ -99,7 +99,9 @@ def main():
         print("Tried to open the config file: ", config_full_path)
 
         return 1
-    client = mqtt.Client( "mqtt2db")
+    # get the client name from the config map
+
+    client = mqtt.Client(configSectionMap(config, "MQTT")['client_name'])
 
 
     #######Bind function to callback
