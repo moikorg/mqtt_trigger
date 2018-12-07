@@ -79,6 +79,11 @@ def on_connect(client, userdata, rc):
     client.disconnect_flag=False
     client.connected_flag=True
 
+def on_disconnect(client, userdata, rc):
+    print("disconnected! Reason :" + str(rc))
+    print("  user data: " + str(userdata))
+    client.connected_flag=False
+    client.disconnect_flag=True
 
 
 def main():
@@ -99,6 +104,7 @@ def main():
 
     #######Bind function to callback
     client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
 
     print("connecting to broker ", broker)
     client.username_pw_set(configSectionMap(config, "MQTT")['username'], configSectionMap(config, "MQTT")['password'])
