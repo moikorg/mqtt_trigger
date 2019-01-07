@@ -76,14 +76,14 @@ def callback_irdata(client, userdata, message):
 
 def on_connect(client, userdata, rc):
     print("connecting reason  "  +str(rc))
-    client.disconnect_flag=False
-    client.connected_flag=True
 
 def on_disconnect(client, userdata, rc):
     print("disconnected! Reason :" + str(rc))
     print("  user data: " + str(userdata))
-    client.connected_flag=False
-    client.disconnect_flag=True
+    # try to reconnect 10 times, then die
+    sleep(10)
+    print("try to reconnect")
+    client.reconnect()
 
 
 def main():
